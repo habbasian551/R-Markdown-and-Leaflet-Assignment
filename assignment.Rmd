@@ -1,0 +1,113 @@
+---
+output:
+  word_document: default
+  html_document: default
+  pdf_document: default
+---
+title: 'Peer-graded Assignment: R Markdown and Leaflet'
+author: "Hossein Abbasian M."
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Background
+Create a web page using R Markdown that features a map created with Leaflet.
+
+Host your webpage on either GitHub Pages, RPubs, or NeoCities.
+
+Your webpage must contain the date that you created the document, and it must contain a map created with Leaflet. We would love to see you show off your creativity!
+
+## Assignment:
+# Top 5 universities in Switzerland
+
+library(leaflet)
+
+# According to: https://www.topuniversities.com/qs-world-university-rankings
+
+# 01) ETH Zurich University - World Rank #6
+# 02) École Polytechnique Fédérale de Lausanne (EPFL) University - World Rank #14
+# 03) University of Zurich - World Rank #69
+# 04) University of Bern - World Rank #114
+# 05) University of Basel - World Rank #149
+
+
+
+
+
+univSites <- c(
+  "<a href='https://ethz.ch/en.html'>ETH Zurich University - World Rank #6</a>",
+  "<a href='https://www.epfl.ch/en/'>EPFL University - World Rank #14</a>",
+  "<a href='https://www.uzh.ch/en.html'>University of Zurich - World Rank #69</a>",
+  "<a href='https://www.unibe.ch/index_eng.html'>University of Bern - World Rank #114</a>",
+  "<a href='https://www.unibas.ch/en.html'>University of Basel - World Rank #149</a>"
+  )
+
+
+univLatLon <- data.frame(
+  lat = c(47.3763, 46.5191, 47.3743, 46.9505, 47.5585),
+  lng = c(8.5477, 6.5668, 8.5510, 7.4381, 7.5839)
+)
+
+
+ETHIcon <- makeIcon(
+  iconUrl='https://media0.giphy.com/media/13SfguJ4lAo1GYQ5Xc/source.gif',
+  iconWidth=31 * 215 / 230,
+  iconHeight=31,
+  iconAnchorX=31 * 215 / 230 / 2,
+  iconAnchorY=16
+)
+
+
+EPFLIcon <- makeIcon(
+  iconUrl='https://i.pinimg.com/originals/c9/69/da/c969daec9e01c80f034adaaa35b7f362.jpg',
+  iconWidth=31 * 215 / 230,
+  iconHeight=31,
+  iconAnchorX=31 * 215 / 230 / 2,
+  iconAnchorY=16
+)
+
+
+ZURICHIcon <- makeIcon(
+  iconUrl='https://www.climate-kic.org/wp-content/uploads/2018/07/university-of-zurich-logo.jpg',
+  iconWidth=31 * 215 / 230,
+  iconHeight=31,
+  iconAnchorX=31 * 215 / 230 / 2,
+  iconAnchorY=16
+)
+
+
+BERNIcon <- makeIcon(
+  iconUrl='https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Logo_Universit%C3%A4t_Bern.svg/1024px-Logo_Universit%C3%A4t_Bern.svg.png',
+  iconWidth=31 * 215 / 230,
+  iconHeight=31,
+  iconAnchorX=31 * 215 / 230 / 2,
+  iconAnchorY=16
+)
+
+
+
+BASELIcon <- makeIcon(
+  iconUrl='https://seekvectorlogo.com/wp-content/uploads/2019/08/university-of-basel-vector-logo-small.png',
+  iconWidth=31 * 215 / 230,
+  iconHeight=31,
+  iconAnchorX=31 * 215 / 230 / 2,
+  iconAnchorY=16
+)
+
+
+
+univIcons <- iconList(
+  ETHIcon,
+  EPFLIcon,
+  ZURICHIcon,
+  BERNIcon,
+  BASELIcon
+)
+
+univLatLon %>%
+  leaflet() %>%
+  addTiles() %>%
+  addMarkers(icon=univIcons, popup=univSites)
